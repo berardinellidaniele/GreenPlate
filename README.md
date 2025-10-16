@@ -1,13 +1,12 @@
-# 🥦 GreenPlate – Mangia bene, vivi green 🌍
+# 🥦 GreenPlate – mangia bene, vivi green 🌍
 
-> 🍽️ **Unisci benessere e sostenibilità con l’intelligenza artificiale.**  
+> 🍽️ **unisci benessere e sostenibilità con l’intelligenza artificiale.**  
 > GreenPlate è l’app che ti aiuta a scegliere cosa mangiare in modo sano, etico e a basso impatto ambientale.  
 
 ---
 
-## 🌱 Cos’è GreenPlate?
-GreenPlate è un’app che utilizza **AI e Machine Learning** per creare piani alimentari personalizzati,  
-calcolare l’impatto ambientale dei pasti e suggerire **ricette sostenibili** con ingredienti locali e stagionali.  
+## 🌱 cos’è GreenPlate?
+GreenPlate è un’app che crea piani alimentari personalizzati, calcola l’impatto ambientale dei pasti e suggerisce **ricette sostenibili** con ingredienti locali e stagionali.  
 
 ✨ *L’obiettivo è migliorare la salute delle persone e del pianeta, un pasto alla volta.*
 
@@ -28,9 +27,8 @@ calcolare l’impatto ambientale dei pasti e suggerire **ricette sostenibili** c
 
 | Componente | Tecnologia |
 |-------------|-------------|
-| **Frontend** | React / Vue – UI moderna e responsiva |
+| **Frontend** | React / Vue – UI |
 | **Backend** | Python + FastAPI (API RESTful) |
-| **Database** | PostgreSQL / MongoDB |
 | **AI Engine** | Modelli ML per nutrizione e impatto ambientale |
 | **Hosting** | Docker / Cloud Native Deployment |
 
@@ -54,25 +52,3 @@ Ogni anno pubblicheremo un report d’impatto aperto a tutti, perché la fiducia
 
 ---
 
-## ⚙️ Installazione
-
-### 🔧 Requisiti
-- Python ≥ 3.10  
-- Node.js ≥ 18  
-- PostgreSQL o MongoDB  
-
-### 🧭 Setup
-```bash
-# Clona il progetto
-git clone https://github.com/<tuo-utente>/greenplate.git
-cd greenplate
-
-# Avvia il backend
-cd backend
-pip install -r requirements.txt
-uvicorn main:app --reload
-
-# Avvia il frontend
-cd ../frontend
-npm install
-npm run dev
