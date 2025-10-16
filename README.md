@@ -28,7 +28,7 @@ GreenPlate è un’app che crea piani alimentari personalizzati, calcola l’imp
 | Componente | Tecnologia |
 |-------------|-------------|
 | **Frontend** | React / Vue – UI |
-| **Backend** | Python + FastAPI (API RESTful) |
+| **Backend** | Python + Flask (API RESTful) |
 | **AI Engine** | Modelli ML per nutrizione e impatto ambientale |
 | **Hosting** | Docker / Cloud Native Deployment |
 
