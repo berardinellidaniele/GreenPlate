@@ -72,6 +72,7 @@
 @layer theme, base, components, utilities;
 @layer theme {
   :root, :host {
+    --color-black: #000;
     --color-white: #fff;
     --spacing: 0.25rem;
     --container-xl: 36rem;
@@ -269,8 +270,17 @@
   }
 }
 @layer utilities {
+  .pointer-events-auto {
+    pointer-events: auto;
+  }
+  .pointer-events-none {
+    pointer-events: none;
+  }
   .absolute {
     position: absolute;
+  }
+  .fixed {
+    position: fixed;
   }
   .relative {
     position: relative;
@@ -289,6 +299,9 @@
   }
   .z-50 {
     z-index: 50;
+  }
+  .z-\[9999\] {
+    z-index: 9999;
   }
   .col-span-2 {
     grid-column: span 2 / span 2;
@@ -319,9 +332,6 @@
   }
   .mt-2 {
     margin-top: calc(var(--spacing) * 2);
-  }
-  .mt-6 {
-    margin-top: calc(var(--spacing) * 6);
   }
   .mt-20 {
     margin-top: calc(var(--spacing) * 20);
@@ -657,11 +667,8 @@
       border-color: color-mix(in oklab, var(--border) 50%, transparent);
     }
   }
-  .border-destructive\/30 {
+  .border-destructive {
     border-color: var(--destructive);
-    @supports (color: color-mix(in lab, red, red)) {
-      border-color: color-mix(in oklab, var(--destructive) 30%, transparent);
-    }
   }
   .border-input {
     border-color: var(--input);
@@ -717,6 +724,12 @@
   .bg-background {
     background-color: var(--background);
   }
+  .bg-black\/40 {
+    background-color: color-mix(in srgb, #000 40%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-black) 40%, transparent);
+    }
+  }
   .bg-border {
     background-color: var(--border);
   }
@@ -731,12 +744,6 @@
   }
   .bg-destructive {
     background-color: var(--destructive);
-  }
-  .bg-destructive\/10 {
-    background-color: var(--destructive);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--destructive) 10%, transparent);
-    }
   }
   .bg-muted {
     background-color: var(--muted);
@@ -1084,6 +1091,9 @@
   .py-5 {
     padding-block: calc(var(--spacing) * 5);
   }
+  .py-6 {
+    padding-block: calc(var(--spacing) * 6);
+  }
   .py-8 {
     padding-block: calc(var(--spacing) * 8);
   }
@@ -1196,9 +1206,6 @@
   }
   .text-card-foreground {
     color: var(--card-foreground);
-  }
-  .text-destructive {
-    color: var(--destructive);
   }
   .text-destructive-foreground {
     color: var(--destructive-foreground);
@@ -1913,6 +1920,38 @@ svg[data-next-mark-loading] path {
   display: none !important;
   visibility: hidden !important;
   opacity: 0 !important;
+}
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes scale-in {
+  0% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out forwards;
+}
+.animate-scale-in {
+  animation: scale-in 0.25s ease-out forwards;
 }
 @property --tw-rotate-x {
   syntax: "*";

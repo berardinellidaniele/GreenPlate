@@ -6,6 +6,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
+import { useEffect } from "react"
 import {
   Leaf,
   Droplets,
@@ -92,6 +93,13 @@ export default function GreenPlatePage() {
   const [showGamification, setShowGamification] = useState(false)
   const [analysisData, setAnalysisData] = useState<any | null>(null)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
+  useEffect(() => {
+  if (errorMessage) {
+    const timer = setTimeout(() => setErrorMessage(null), 3000)
+    return () => clearTimeout(timer)
+  }
+}, [errorMessage])
 
 const handleAnalyze = async () => {
   if (!foodInput.trim()) return
@@ -573,11 +581,16 @@ const handleAnalyze = async () => {
               style={{ animationDelay: "0.1s" }}
             >
 
-              {errorMessage && (
-  <div className="mt-6 p-4 bg-destructive/10 border border-destructive/30 rounded-xl text-destructive text-center font-medium animate-slide-up">
-    ⚠️ {errorMessage}
+         {errorMessage && (
+  <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/40 backdrop-blur-sm animate-fade-in pointer-events-none">
+    <div className="bg-destructive text-destructive-foreground border border-destructive px-8 py-6 rounded-2xl shadow-2xl text-center font-medium text-lg animate-scale-in pointer-events-auto">
+      ⚠️ {errorMessage}
+    </div>
   </div>
 )}
+
+
+
 
               <Input
                 type="text"
