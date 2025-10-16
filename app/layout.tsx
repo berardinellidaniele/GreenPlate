@@ -7,11 +7,6 @@ import "./globals.css"
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
-export const metadata: Metadata = {
-  title: "GreenPlate - AI per scelte alimentari sostenibili",
-  description: "Scopri l'impatto ambientale delle tue scelte alimentari con l'intelligenza artificiale",
-  generator: "v0.app",
-}
 
 export default function RootLayout({
   children,

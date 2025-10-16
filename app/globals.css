@@ -119,6 +119,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+  
   body {
     @apply bg-background text-foreground;
   }
@@ -180,4 +181,11 @@
 
 .animate-scale-in {
   animation: scale-in 0.4s ease-out forwards;
+}
+
+svg[data-next-mark-loading],
+svg[data-next-mark-loading] path {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
 }
