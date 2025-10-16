@@ -1,0 +1,81 @@
+0 info it worked if it ends with ok
+1 verbose cli [
+1 verbose cli   'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   '-g',
+1 verbose cli   '@railway/cli'
+1 verbose cli ]
+2 info using npm@1.4.9
+3 info using node@v22.20.0
+4 verbose cache add [ '@railway/cli', null ]
+5 verbose cache add name=undefined spec="@railway/cli" args=["@railway/cli",null]
+6 verbose parsed url Url {
+6 verbose parsed url   protocol: null,
+6 verbose parsed url   slashes: null,
+6 verbose parsed url   auth: null,
+6 verbose parsed url   host: null,
+6 verbose parsed url   port: null,
+6 verbose parsed url   hostname: null,
+6 verbose parsed url   hash: null,
+6 verbose parsed url   search: null,
+6 verbose parsed url   query: null,
+6 verbose parsed url   pathname: '@railway/cli',
+6 verbose parsed url   path: '@railway/cli',
+6 verbose parsed url   href: '@railway/cli'
+6 verbose parsed url }
+7 verbose cache add name="" spec="railway/cli" args=["","railway/cli"]
+8 verbose parsed url Url {
+8 verbose parsed url   protocol: null,
+8 verbose parsed url   slashes: null,
+8 verbose parsed url   auth: null,
+8 verbose parsed url   host: null,
+8 verbose parsed url   port: null,
+8 verbose parsed url   hostname: null,
+8 verbose parsed url   hash: null,
+8 verbose parsed url   search: null,
+8 verbose parsed url   query: null,
+8 verbose parsed url   pathname: 'railway/cli',
+8 verbose parsed url   path: 'railway/cli',
+8 verbose parsed url   href: 'railway/cli'
+8 verbose parsed url }
+9 silly lockFile 4ba39a05-railway-cli railway/cli
+10 verbose lock railway/cli C:\Users\mudri\AppData\Roaming\npm-cache\4ba39a05-railway-cli.lock
+11 info maybeGithub Attempting railway/cli from git://github.com/railway/cli
+12 silly lockFile 47c581ff-git-github-com-railway-cli git://github.com/railway/cli
+13 verbose lock git://github.com/railway/cli C:\Users\mudri\AppData\Roaming\npm-cache\47c581ff-git-github-com-railway-cli.lock
+14 verbose addRemoteGit [ 'git://github.com/railway/cli', 'master' ]
+15 verbose git clone git://github.com/railway/cli Cloning into bare repository 'C:\Users\mudri\AppData\Roaming\npm-cache\_git-remotes\git-github-com-railway-cli-47c581ff'...
+15 verbose git clone git://github.com/railway/cli fatal: unable to connect to github.com:
+15 verbose git clone git://github.com/railway/cli github.com[0: 140.82.121.4]: errno=Connection timed out
+16 silly lockFile 47c581ff-git-github-com-railway-cli git://github.com/railway/cli
+17 silly lockFile 47c581ff-git-github-com-railway-cli git://github.com/railway/cli
+18 info maybeGithub Attempting railway/cli from git+ssh://git@github.com:railway/cli
+19 silly lockFile b826c14f-git-github-com-railway-cli git@github.com:railway/cli
+20 verbose lock git@github.com:railway/cli C:\Users\mudri\AppData\Roaming\npm-cache\b826c14f-git-github-com-railway-cli.lock
+21 verbose addRemoteGit [ 'git@github.com:railway/cli', 'master' ]
+22 error git clone git@github.com:railway/cli Cloning into bare repository 'C:\Users\mudri\AppData\Roaming\npm-cache\_git-remotes\git-github-com-railway-cli-b826c14f'...
+22 error git clone git@github.com:railway/cli Host key verification failed.
+22 error git clone git@github.com:railway/cli fatal: Could not read from remote repository.
+22 error git clone git@github.com:railway/cli
+22 error git clone git@github.com:railway/cli Please make sure you have the correct access rights
+22 error git clone git@github.com:railway/cli and the repository exists.
+23 silly lockFile b826c14f-git-github-com-railway-cli git@github.com:railway/cli
+24 silly lockFile b826c14f-git-github-com-railway-cli git@github.com:railway/cli
+25 silly lockFile 4ba39a05-railway-cli railway/cli
+26 silly lockFile 4ba39a05-railway-cli railway/cli
+27 error addLocal Could not install railway/cli
+28 error Error: ENOENT: no such file or directory, stat 'C:\Users\mudri\Desktop\GreenPlate\railway\cli'
+29 error If you need help, you may report this *entire* log,
+29 error including the npm and node versions, at:
+29 error     <http://github.com/npm/npm/issues>
+30 error System Windows_NT 10.0.26100
+31 error command "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "-g" "@railway/cli"
+32 error cwd C:\Users\mudri\Desktop\GreenPlate
+33 error node -v v22.20.0
+34 error npm -v 1.4.9
+35 error path C:\Users\mudri\Desktop\GreenPlate\railway\cli
+36 error syscall stat
+37 error code ENOENT
+38 error errno -4058
+39 verbose exit [ -4058, true ]
