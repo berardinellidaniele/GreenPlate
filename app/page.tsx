@@ -90,23 +90,45 @@ export default function GreenPlatePage() {
   const [showResults, setShowResults] = useState(false)
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [showGamification, setShowGamification] = useState(false)
+  const [analysisData, setAnalysisData] = useState<any | null>(null)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
-  const handleAnalyze = () => {
-    if (!foodInput.trim()) return
+const handleAnalyze = async () => {
+  if (!foodInput.trim()) return
 
-    setIsAnalyzing(true)
-    setTimeout(() => {
-      setIsAnalyzing(false)
+  setIsAnalyzing(true)
+  setErrorMessage(null)
+  setAnalysisData(null)
+
+  try {
+    const response = await fetch("https://22dr9frp-5000.euw.devtunnels.ms/api/analizza", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ piatto: foodInput }),
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      throw new Error(data.error || "Errore durante l'analisi.")
+    }
+
+    if (data.result?.error) {
+      setErrorMessage(data.result.error)
+    } else {
+      setAnalysisData(data.result)
       setShowResults(true)
       setShowGamification(false)
-    }, 2000)
+    }
+  } catch (error: any) {
+    setErrorMessage(error.message || "Errore di connessione al server.")
+  } finally {
+    setIsAnalyzing(false)
   }
+}
 
-  const resetAnalysis = () => {
-    setShowResults(false)
-    setShowGamification(false)
-    setFoodInput("")
-  }
 
   const suggestedPrompts = [
     "Bistecca di manzo",
@@ -121,30 +143,13 @@ export default function GreenPlatePage() {
     setFoodInput(prompt)
   }
 
-  const mockData: GreenPlateAnalysisResponse = {
-    food: foodInput || "Bistecca di manzo",
-    impact: {
-      co2: 27.0,
-      water: 15400,
-      land: 326,
-    },
-    sustainabilityScore: 35,
-    aiRecommendation: {
-      alternative: "Pollo biologico",
-      alternativeCo2: 6.9,
-      message:
-        "ha un impatto ambientale molto inferiore, mantiene un ottimo apporto proteico ed è più sostenibile per il pianeta.",
-      savings: {
-        co2Percentage: 74,
-        waterPercentage: 68,
-        landPercentage: 71,
-      },
-    },
-    weeklyImpact: {
-      co2Monthly: 60,
-      waterMonthly: 31000,
-    },
-  }
+ const resetAnalysis = () => {
+  setShowResults(false)
+  setAnalysisData(null)
+  setFoodInput("")
+  setErrorMessage(null)
+}
+
 
   const gamificationData: GamificationData = {
     level: 12,
@@ -567,6 +572,13 @@ export default function GreenPlatePage() {
               className="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto animate-slide-up"
               style={{ animationDelay: "0.1s" }}
             >
+
+              {errorMessage && (
+  <div className="mt-6 p-4 bg-destructive/10 border border-destructive/30 rounded-xl text-destructive text-center font-medium animate-slide-up">
+    ⚠️ {errorMessage}
+  </div>
+)}
+
               <Input
                 type="text"
                 placeholder="Es: Bistecca di manzo, Pasta al pomodoro..."
@@ -668,7 +680,7 @@ export default function GreenPlatePage() {
                 Analisi completata!
               </h2>
               <p className="text-xl text-muted-foreground">
-                Ecco l'impatto ambientale di: <span className="font-bold text-primary">{mockData.food}</span>
+                Ecco l'impatto ambientale di: <span className="font-bold text-primary">{analysisData?.piatto}</span>
               </p>
             </div>
 
@@ -680,7 +692,7 @@ export default function GreenPlatePage() {
                     <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center shadow-lg">
                       <TrendingDown className="w-8 h-8 text-primary-foreground" />
                     </div>
-                    <span className="text-4xl font-bold text-primary">{mockData.impact.co2}</span>
+                    <span className="text-4xl font-bold text-primary">{analysisData?.co2_kg}</span>
                   </div>
                   <div>
                     <p className="text-base font-semibold text-card-foreground">Emissioni CO₂</p>
@@ -701,7 +713,7 @@ export default function GreenPlatePage() {
                     <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-accent to-accent/70 flex items-center justify-center shadow-lg">
                       <Droplets className="w-8 h-8 text-accent-foreground" />
                     </div>
-                    <span className="text-4xl font-bold text-accent">{mockData.impact.water.toLocaleString()}</span>
+                    <span className="text-4xl font-bold text-accent">{analysisData?.acqua_l.toLocaleString()}</span>
                   </div>
                   <div>
                     <p className="text-base font-semibold text-card-foreground">Acqua Utilizzata</p>
@@ -722,7 +734,7 @@ export default function GreenPlatePage() {
                     <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-secondary to-secondary/70 flex items-center justify-center shadow-lg">
                       <Leaf className="w-8 h-8 text-secondary-foreground" />
                     </div>
-                    <span className="text-4xl font-bold text-secondary">{mockData.impact.land}</span>
+                    <span className="text-4xl font-bold text-secondary">{analysisData?.uso_suolo_m2}</span>
                   </div>
                   <div>
                     <p className="text-base font-semibold text-card-foreground">Uso del Suolo</p>
@@ -765,7 +777,7 @@ export default function GreenPlatePage() {
                           strokeWidth="14"
                           fill="none"
                           strokeDasharray={`${2 * Math.PI * 70}`}
-                          strokeDashoffset={`${2 * Math.PI * 70 * (1 - mockData.sustainabilityScore / 100)}`}
+                          strokeDashoffset={`${2 * Math.PI * 70 * (1 - analysisData?.punteggio_sostenibilita / 100)}`}
                           strokeLinecap="round"
                           className="transition-all duration-1000 ease-out"
                         />
@@ -778,7 +790,7 @@ export default function GreenPlatePage() {
                       </svg>
                       <div className="absolute inset-0 flex items-center justify-center">
                         <span className="text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                          {mockData.sustainabilityScore}
+                          {analysisData?.punteggio_sostenibilita}
                         </span>
                       </div>
                     </div>
@@ -786,10 +798,10 @@ export default function GreenPlatePage() {
                   <div className="flex-1 space-y-4 text-center md:text-left">
                     <h3 className="text-3xl font-bold text-card-foreground">Punteggio Sostenibilità</h3>
                     <p className="text-muted-foreground leading-relaxed text-lg">
-                      Questo alimento ha un impatto ambientale significativo. La produzione di carne rossa richiede
-                      molte risorse naturali e genera elevate emissioni di gas serra. Considera alternative più
-                      sostenibili per ridurre la tua impronta ecologica.
-                    </p>
+  {analysisData?.spiegazione ||
+    "Analisi non disponibile. Riprova con un altro piatto per scoprire il suo impatto ambientale."}
+</p>
+
                   </div>
                 </div>
               </CardContent>
@@ -810,10 +822,10 @@ export default function GreenPlatePage() {
                       <h3 className="text-2xl font-bold text-card-foreground mb-3">Consiglio AI per te</h3>
                       <p className="text-muted-foreground leading-relaxed text-lg">
                         Prova con{" "}
-                        <span className="font-bold text-accent text-xl">{mockData.aiRecommendation.alternative}</span>:{" "}
-                        {mockData.aiRecommendation.message} (
+                        <span className="font-bold text-accent text-xl">{analysisData?.alternativa_sostenibile}</span>:{" "}
+                        {analysisData?.spiegazione} (
                         <span className="font-bold text-primary">
-                          {mockData.aiRecommendation.alternativeCo2} kg CO₂
+                          {analysisData?.alternative_impatto?.co2_kg} kg CO₂
                         </span>
                         )
                       </p>
@@ -822,19 +834,19 @@ export default function GreenPlatePage() {
                     <div className="grid grid-cols-3 gap-6 pt-6 border-t-2 border-border">
                       <div className="text-center p-4 rounded-xl bg-gradient-to-br from-primary/10 to-transparent hover:scale-110 transition-transform duration-300">
                         <p className="text-3xl font-bold text-primary">
-                          -{mockData.aiRecommendation.savings.co2Percentage}%
+                          -{analysisData?.risparmio_percentuale?.co2}%
                         </p>
                         <p className="text-sm text-muted-foreground font-medium mt-1">CO₂</p>
                       </div>
                       <div className="text-center p-4 rounded-xl bg-gradient-to-br from-accent/10 to-transparent hover:scale-110 transition-transform duration-300">
                         <p className="text-3xl font-bold text-accent">
-                          -{mockData.aiRecommendation.savings.waterPercentage}%
+                          -{analysisData?.risparmio_percentuale?.acqua}%
                         </p>
                         <p className="text-sm text-muted-foreground font-medium mt-1">Acqua</p>
                       </div>
                       <div className="text-center p-4 rounded-xl bg-gradient-to-br from-secondary/10 to-transparent hover:scale-110 transition-transform duration-300">
                         <p className="text-3xl font-bold text-secondary">
-                          -{mockData.aiRecommendation.savings.landPercentage}%
+                          -{analysisData?.risparmio_percentuale?.suolo}%
                         </p>
                         <p className="text-sm text-muted-foreground font-medium mt-1">Suolo</p>
                       </div>
@@ -856,13 +868,13 @@ export default function GreenPlatePage() {
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-10 pt-6">
                   <div className="p-6 rounded-2xl bg-gradient-to-br from-primary/10 to-transparent hover:scale-110 transition-transform duration-300">
-                    <p className="text-5xl font-bold text-primary">{mockData.weeklyImpact.co2Monthly} kg</p>
+                    <p className="text-5xl font-bold text-primary">{analysisData?.impatto_settimanale?.co2_mensile_kg} kg</p>
                     <p className="text-base text-muted-foreground font-medium mt-2">CO₂ al mese</p>
                   </div>
                   <div className="hidden sm:block w-px h-20 bg-border" />
                   <div className="p-6 rounded-2xl bg-gradient-to-br from-accent/10 to-transparent hover:scale-110 transition-transform duration-300">
                     <p className="text-5xl font-bold text-accent">
-                      {mockData.weeklyImpact.waterMonthly.toLocaleString()} L
+                      {analysisData?.impatto_settimanale?.acqua_mensile_l.toLocaleString()} L
                     </p>
                     <p className="text-base text-muted-foreground font-medium mt-2">Acqua al mese</p>
                   </div>
